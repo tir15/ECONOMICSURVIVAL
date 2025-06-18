@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Economics Survival Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      margin-top: 30px;
+    }
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px;
+    }
+    .box {
+      width: 150px;
+      height: 100px;
+      margin: 10px;
+      background-color: #3498db;
+      color: white;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .question-area {
+      margin-top: 30px;
+    }
+    #question {
+      font-size: 20px;
+      margin: 20px 0;
+    }
+    #timer {
+      font-weight: bold;
+      font-size: 24px;
+      color: red;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Economics Survival Game</h1>
+  <div class="grid" id="grid">
+    <!-- Kotak Soal -->
+  </div>
+
+  <div class="question-area">
+    <div id="question"></div>
+    <div id="timer"></div>
+    <button onclick="revealAnswer()">Reveal Answer</button>
+    <div id="answer" style="font-weight:bold; margin-top:10px;"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Apa yang dimaksud dengan inflasi?",
+        answer: "Kenaikan harga secara umum dan terus-menerus."
+      },
+      {
+        question: "Apa perbedaan ekonomi mikro dan makro?",
+        answer: "Ekonomi mikro fokus pada rumah tangga dan perusahaan, makro fokus pada perekonomian secara keseluruhan."
+      },
+      {
+        question: "Sebutkan salah satu instrumen kebijakan moneter.",
+        answer: "Operasi pasar terbuka."
+      },
+      {
+        question: "Apa tujuan utama dari kebijakan fiskal?",
+        answer: "Menstabilkan ekonomi melalui pengeluaran dan pajak."
+      },
+      {
+        question: "Bagaimana cara pemerintah mengatasi inflasi?",
+        answer: "Dengan menaikkan suku bunga atau mengurangi jumlah uang beredar."
+      },
+      {
+        question: "Apa itu indeks harga konsumen (IHK)?",
+        answer: "Indeks yang mengukur perubahan harga barang dan jasa yang dikonsumsi rumah tangga."
+      }
+    ];
+
+    const grid = document.getElementById("grid");
+    const questionDiv = document.getElementById("question");
+    const answerDiv = document.getElementById("answer");
+    const timerDiv = document.getElementById("timer");
+    let selectedIndex = null;
+    let countdown;
+
+    // Generate box
+    questions.forEach((q, index) => {
+      const box = document.createElement("div");
+      box.className = "box";
+      box.textContent = Soal ${index + 1};
+      box.onclick = () => showQuestion(index);
+      grid.appendChild(box);
+    });
+
+    function showQuestion(index) {
+      selectedIndex = index;
+      questionDiv.textContent = questions[index].question;
+      answerDiv.textContent = "";
+      startTimer(45);
+    }
+
+    function revealAnswer() {
+      if (selectedIndex !== null) {
+        answerDiv.textContent = "Jawaban: " + questions[selectedIndex].answer;
+      }
+    }
+
+    function startTimer(seconds) {
+      clearInterval(countdown);
+      let timeLeft = seconds;
+      timerDiv.textContent = Waktu: ${timeLeft}s;
+
+      countdown = setInterval(() => {
+        timeLeft--;
+        timerDiv.textContent = Waktu: ${timeLeft}s;
+        if (timeLeft <= 0) {
+          clearInterval(countdown);
+          timerDiv.textContent = "Waktu habis!";
+        }
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>
